@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import React, { useState } from 'react'
-import { Button, ContactInput, AddContactForm, Header, Table, Wrapper, Thead, SmallButton, Tdata } from '../styles/StyledComps';
+import { MainWrapper, Button, ContactInput, AddContactForm, Header, Table, Wrapper, Thead, SmallButton, Tdata } from '../styles/StyledComps';
 import data from '../tempdata.json'
 import EditInfo from './EditInfo';
 import StaticInfo from './StaticInfo';
@@ -81,6 +81,7 @@ function Contacts() {
       setEditContactId(null)
     }
   return (
+    <MainWrapper>
     <Wrapper>
       <Header>Contacts list</Header>
       <form>
@@ -117,6 +118,7 @@ function Contacts() {
       </AddContactForm>
       <Button type= 'submit' onClick={handleAddFormSubmit}>Submit</Button>
     </Wrapper>
+    </MainWrapper>
   )
 }
 

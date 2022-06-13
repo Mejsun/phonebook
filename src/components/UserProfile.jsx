@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button, Header, Info, Subheader, UserInfo, Wrapper } from '../styles/StyledComps'
+import { Button, Header, Info, MainWrapper, Subheader, UserInfo, Wrapper } from '../styles/StyledComps'
 
 function UserProfile() {
   return (
-    <div>
+    <MainWrapper>
     <Wrapper>
       <img src='#' alt='profilepic'></img>
       <Header>Name Surname</Header>
@@ -14,9 +14,10 @@ function UserProfile() {
         <Info>Mobile phone</Info>
         <Info>Work phone</Info>
       </UserInfo>
+      <Button>Change the password</Button>
       <Button>Logout</Button>
     </Wrapper>
-    </div>
+    </MainWrapper>
   )
 }
 

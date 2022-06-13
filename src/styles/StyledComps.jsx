@@ -135,3 +135,20 @@ export const ContactInput = styled(Input)`
 export const AddContactForm = styled(Form)`
     height: fit-content;
 `
+export const Navbar = styled.div`
+    top:0;
+    height:80px;
+    padding:0;
+    margin:0;
+    background-color: gray;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+`
+export const Navitem = styled.p`
+    font-size:1rem;
+    color:white;
+    padding:0;
+    margin:0 20px;
+    height: 100%;
+`
