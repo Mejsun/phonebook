@@ -19,6 +19,7 @@ export const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 50%;
+    min-width:800px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `
 export const Header = styled.h1`
@@ -58,13 +59,16 @@ export const Pass = styled(Input)`
     width: 90%;
     margin: 0;
 `
-export const ShowHidePassword = styled.button`
+export const SmallButton = styled.button`
     background-color: inherit;
     border: none;
-    border-bottom: 2px solid black;
-    font-size: 1.8rem;
-    max-width: 11%;
+    font-size: 1.2rem;
     margin:0;
+`
+export const ShowHidePassword = styled(SmallButton)`
+    border-bottom: 2px solid black;
+    max-width: 11%;
+    font-size: 1.8rem;
 `
 export const Button = styled.button`
     background-color: #92B4EC;
@@ -108,4 +112,26 @@ export const UserInfo = styled.div`
 export const Info = styled.p`
     padding: 0;
     margin:5px;
+`
+export const Table = styled.table`
+    width: 100%;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    border-radius: 20px;
+    `
+export const Thead = styled.thead`
+    background-color: gray;
+    color:white;
+`
+export const Tdata = styled.td`
+    border-bottom: 1px solid gray;
+    padding: 5px;
+` 
+export const ContactInput = styled(Input)`
+    font-size: 1.3rem;
+    margin: 10px;
+
+`
+export const AddContactForm = styled(Form)`
+    height: fit-content;
 `
