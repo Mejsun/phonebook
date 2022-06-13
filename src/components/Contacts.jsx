@@ -26,13 +26,10 @@ function Contacts() {
     }
 
     function deleteContact(id){
-      const allContacts = [...contacts]
-      if(window.confirm('Are you sure you want to remove this contact?')){
-        allContacts.splice(id,1)
-      }else{
-        return allContacts
-      }
-      setContacts(allContacts)
+      const removeContact = contacts.filter((contact)=>{
+        return contact.id !== id
+      })
+      setContacts(removeContact)
     }
 
   return (
@@ -63,7 +60,7 @@ function Contacts() {
                           </select>
                         </Tdata>
                         <Tdata><SmallButton><i className="fas fa-edit"></i></SmallButton></Tdata>
-                        <Tdata><SmallButton onClick={() => deleteContact(id)}><i className="fas fa-trash"></i></SmallButton></Tdata>
+                        <Tdata><SmallButton onClick={() => deleteContact(contact.id)}><i className="fas fa-trash"></i></SmallButton></Tdata>
                     </tr>
                ))}
                 </tbody>
