@@ -29,7 +29,11 @@ function Contacts() {
       const removeContact = contacts.filter((contact)=>{
         return contact.id !== id
       })
-      setContacts(removeContact)
+      if(window.confirm('Are you sure you want to delete this contact?')){
+        setContacts(removeContact)
+      }else{
+        setContacts(contacts)
+      }
     }
 
   return (
