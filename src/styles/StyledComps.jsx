@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
     text-align: center;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 50%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `
 export const Header = styled.h1`
@@ -36,7 +36,7 @@ export const Form = styled.form`
     background-color: white;
     padding: 20px;
     width: fit-content;
-    max-width:300px;
+    width:80%;
     margin: auto;
     border-radius: 20px;
 `
