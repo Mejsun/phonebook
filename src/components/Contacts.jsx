@@ -29,8 +29,7 @@ function Contacts() {
     setAddFormData({fullname: '', company: '', email: '', mobilephone: '', workphone:'', homephone:''})
   }
 
-    function handleDelete(id, e){
-      e.preventDefault()
+    function handleDelete(id){
       const removeContact = contacts.filter((contact)=>{
         return contact.id !== id
       })

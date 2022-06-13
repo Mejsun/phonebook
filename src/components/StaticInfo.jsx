@@ -16,7 +16,7 @@ function StaticInfo({contact, editId, handleDelete}) {
       </select>
     </Tdata>
     <Tdata><SmallButton type='button' onClick={(e)=> {editId(e, contact)}}><i className="fas fa-edit"></i></SmallButton></Tdata>
-    <Tdata><SmallButton type='button' onClick={(e)=> {handleDelete(contact.id)}}><i className="fas fa-trash"></i></SmallButton></Tdata>
+    <Tdata><SmallButton type='button' onClick={()=> {handleDelete(contact.id)}}><i className="fas fa-trash"></i></SmallButton></Tdata>
     </tr>
   )
 }
