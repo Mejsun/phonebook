@@ -1,15 +1,35 @@
+import axios from 'axios';
 import { nanoid } from 'nanoid';
-import React, { useState } from 'react'
-import { MainWrapper, Button, ContactInput, AddContactForm, Header, Table, Wrapper, Thead, SmallButton, Tdata } from '../styles/StyledComps';
-import data from '../tempdata.json'
+import React, { useEffect, useState } from 'react'
+import { MainWrapper, Button, Header, Wrapper} from '../styles/StyledComps';
+import AddContact from './AddContact';
 import EditInfo from './EditInfo';
 import StaticInfo from './StaticInfo';
 
 function Contacts() {
-  const [contacts, setContacts] = useState(data)
-  const [addFormData, setAddFormData] = useState({fullname: '', company: '', email: '', mobilephone: '', workphone:'', homephone:''})
-  const [editContactData, setEditContactData] = useState({fullname: '', company: '', email: '', mobilephone: '', workphone:'', homephone:''})
+  const getToken = localStorage.getItem('token')
+  const contactInfo = {contactName: '', company: '', primaryEmailAddress: '', mobilephone:'', homephone:'', workphone:'' }
+  const [contacts, setContacts] = useState([])
+  const [addFormData, setAddFormData] = useState(contactInfo)
+  const [editContactData, setEditContactData] = useState(contactInfo)
   const [editContactId, setEditContactId] = useState(null)
+  
+  useEffect(() => {
+    axios.get('https://interview.intrinsiccloud.net/contacts', {
+      headers: {
+      Authorization: `Bearer ${getToken}`
+     }})
+      .then(res => {
+        for(let i = 0; i< res.data.length; i++){
+          contactInfo.push(res.data[i])
+        }
+        console.log(res.data)
+        setContacts(contactInfo)    
+      })
+      .catch(err => {
+        console.log(err.response)
+      })
+  }, [getToken])
 
   function handleAddFormChange(e){
     e.preventDefault();
@@ -22,23 +42,30 @@ function Contacts() {
 
   function handleAddFormSubmit (e){
     e.preventDefault();
-    const newContact = {id: nanoid(), fullname: addFormData.fullname, company: addFormData.company, email: addFormData.email, 
-          mobilephone: addFormData.mobilephone, workphone: addFormData.workphone, homephone: addFormData.homephone}
+    const newContact = {
+      id: nanoid(), 
+      contactName: addFormData.contactName, 
+      company: addFormData.company, 
+      primaryEmailAddress: addFormData.primaryEmailAddress, 
+      mobilephone: addFormData.mobilephone, 
+      homephone: addFormData.homephone, 
+      workphone: addFormData.workphone, 
+     }
     const newContacts = [...contacts, newContact]
     setContacts(newContacts)
-    setAddFormData({fullname: '', company: '', email: '', mobilephone: '', workphone:'', homephone:''})
+    setAddFormData({contactName: '', company: '', primaryEmailAddress: '', mobilephone: '', homephone:'', workphone:''})
   }
 
-    function handleDelete(id){
-      const removeContact = contacts.filter((contact)=>{
-        return contact.id !== id
-      })
-      if(window.confirm('Are you sure you want to delete this contact?')){
-        setContacts(removeContact)
-      }else{
-        setContacts(contacts)
-      }
+  function handleDelete(id){
+    const removeContact = contacts.filter((contact)=>{
+      return contact.id !== id
+    })
+    if(window.confirm('Are you sure you want to delete this contact?')){
+      setContacts(removeContact)
+    }else{
+      setContacts(contacts)
     }
+  }
 
     function handleEdit(e){
       e.preventDefault()
@@ -53,12 +80,12 @@ function Contacts() {
       e.preventDefault()
       setEditContactId(contact.id)
       const formValues = {
-        fullname: contact.fullname,
+        contactName: contact.contactName,
         company: contact.company,
-        email: contact.email,
+        primaryEmailAddress: contact.primaryEmailAddress,
         mobilephone: contact.mobilephone, 
-        workphone:contact.workphone, 
-        homephone: contact.workphone
+        homephone: contact.homephone, 
+        workphone: contact.workphone, 
       }
       setEditContactData(formValues)
     }
@@ -67,9 +94,9 @@ function Contacts() {
       e.preventDefault()
       const edited = {
         id: editContactId,
-        fullname: editContactData.fullname,
+        contactName: editContactData.contactName,
         company: editContactData.company,
-        email: editContactData.email,
+        primaryEmailAddress: editContactData.primaryEmailAddress,
         mobilephone: editContactData.mobilephone,
         workphone: editContactData.workphone,
         homephone: editContactData.homephone,
@@ -80,42 +107,24 @@ function Contacts() {
       setContacts(newContacts)
       setEditContactId(null)
     }
+
   return (
     <MainWrapper>
     <Wrapper>
       <Header>Contacts list</Header>
-      <form>
-        <Table>
-          <Thead>
-            <tr>
-              <Tdata>Name</Tdata>
-              <Tdata>Company</Tdata>
-              <Tdata>Email</Tdata>
-              <Tdata>Phone</Tdata>
-              <Tdata>Edit</Tdata>
-              <Tdata>Delete</Tdata>
-            </tr>
-          </Thead>
-          <tbody>
+      <form onSubmit={editSubmit}>
+          <div>
           {contacts.map((contact)=> (
-          <>
+          <div key={contact.id}>
           {editContactId === contact.id ? 
             (<EditInfo handleEdit={handleEdit} editContactData={editContactData}/>) : 
             (<StaticInfo contact={contact} editId={editId} handleDelete={handleDelete}/>)
           }   
-          </>
-          ))}
-          </tbody>
-        </Table>
+          </div>
+          )).sort()}
+          </div>
       </form>
-      <AddContactForm onSubmit={handleAddFormSubmit}>
-        <ContactInput type = 'text' name='fullname' placeholder='Name' onChange={handleAddFormChange}/>
-        <ContactInput type = 'text' name='company' placeholder='Company' onChange={handleAddFormChange}/>
-        <ContactInput type = 'email' name='email' placeholder='Email' onChange={handleAddFormChange}/>
-        <ContactInput type = 'number' name='mobilephone' placeholder='Mobile Phone' onChange={handleAddFormChange}/>
-        <ContactInput type = 'text' name='workphone' placeholder='Work Phone' onChange={handleAddFormChange}/>
-        <ContactInput type = 'text' name='homephone' placeholder='Home Phone' onChange={handleAddFormChange}/>
-      </AddContactForm>
+      <AddContact handleAddFormSubmit={handleAddFormSubmit} handleAddFormChange={handleAddFormChange} />
       <Button type= 'submit' onClick={handleAddFormSubmit}>Submit</Button>
     </Wrapper>
     </MainWrapper>

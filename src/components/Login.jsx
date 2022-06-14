@@ -8,34 +8,19 @@ function Login() {
   const [userData, setUserData] = useState({email: '', password: ''})
   const [view, setView] = useState(false)
   const [validationMessage, setValidationMessage] = useState('')
-  
-
-  const addDataIntoCache = (cacheName, url, response) => {
-    // Converting our response into Actual Response form
-    const data = new Response(JSON.stringify(response));
-  
-    if ('caches' in window) {
-      // Opening given cache and putting our data into it
-      caches.open(cacheName).then((cache) => {
-        cache.put(url, data);
-        alert('Data Added into cache!')
-      });
-    }
-  };
 
   async function handleSubmit (e){
     e.preventDefault();
 
     await axios.post('https://interview.intrinsiccloud.net/auth/login', {
       username: userData.email,
-      password: userData.password
+      password: userData.password,
     })
       .then(res => {
         console.log(res.data)
         localStorage.setItem('email', userData.email) //save email
         localStorage.setItem('token', res.data.token) //save email
-        addDataIntoCache('profile data', 'http://localhost:3000/profile', 'sample')
-        //window.location = '/profile'
+        window.location = '/profile'
       })
       .catch(err => {
         console.log(err)
