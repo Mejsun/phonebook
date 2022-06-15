@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import {Wrapper, Header, Subheader, Form, Input, PasswordInput, ShowHidePassword, Pass, Button} from '../styles/StyledComps'
-
+import {Wrapper, Header, Subheader, Form, Input, PasswordInput, ShowHidePassword, Pass, Button, Options} from '../styles/StyledComps'
+import { Link } from "react-router-dom";
 
 function Login() {
 
   const [userData, setUserData] = useState({email: '', password: ''})
   const [view, setView] = useState(false)
   const [validationMessage, setValidationMessage] = useState('')
+  const getToken = localStorage.getItem('token')
 
   async function handleSubmit (e){
     e.preventDefault();
@@ -49,10 +50,25 @@ function Login() {
   }, [userData.email]) 
 
 
+
   return (
     <>
     <Wrapper>
-      <Header>Welcome!</Header>
+    {getToken ? 
+    (<>
+      <Header>Welcome back!</Header>
+      <div>
+      <Link to='/profile'>
+        <Options>Profile</Options>
+        </Link> 
+        <Link to='/contacts'>
+        <Options>Contacts</Options>
+        </Link> 
+      </div>
+    </>
+      ) : (
+        <>
+        <Header>Welcome!</Header>
       <Subheader>{validationMessage}</Subheader>
       <Form>
         <label htmlFor='email'>Email</label>
@@ -64,6 +80,9 @@ function Login() {
         </PasswordInput>
       </Form>
       <Button onClick={handleSubmit}>Login</Button>
+        </>
+      )
+    }  
     </Wrapper>
     </>
   )

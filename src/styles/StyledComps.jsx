@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import toppic from '../static/plant.PNG'
+import bottompic from '../static/bottom-pic.PNG'
 
 export const MainWrapper = styled.div`
     display: flex;
@@ -8,6 +10,10 @@ export const MainWrapper = styled.div`
     text-align: center;
     height: 100vh;
     background-color: white;
+    background:
+    url(${bottompic}) bottom right no-repeat,
+    url(${toppic}) top left no-repeat;
+  background-size: 45%, 20%;
 `
 export const Wrapper = styled.div`
     background-color: rgba(255, 255, 255, .15); 
@@ -29,6 +35,12 @@ export const UserWrapper = styled.div`
     text-align: center;
     align-items: center;
     width: 100%;
+`
+export const ContactsWrapper = styled(MainWrapper)`
+    flex-direction: column;
+    min-height: 100vh;
+    height: fit-content;
+    padding: 50px 0;
 `
 export const Header = styled.h1`
     font-size:2.5rem;
@@ -57,7 +69,6 @@ export const Form = styled.form`
     border-radius: 20px;
 `
 export const ContactForm = styled(Form)`
-    overflow-x: scroll;
     margin: 20px auto;
 `
 export const Input = styled.input`
@@ -145,15 +156,30 @@ export const Info = styled.p`
 `
 export const AddContactForm = styled(Form)`
     height: fit-content;
-    display: flex;
+    display: grid;
     font-size: 1rem;
     padding:0;
-    width: 90vw;
-    margin: 20px auto;
+    background-color: transparent;
+    width: 100%;
+    margin: 20px  auto;
+    grid-template-rows: repeat(2,1fr);
+    grid-template-columns: repeat(3,1fr);
+    column-gap: 20px;
+    @media (max-width: 992px){
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(3,1fr);
+    }
+    @media (max-width: 768px){
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6,1fr);
+    }
+    
 `
 export const ContactInput = styled(Input)`
     font-size: 1.3rem;
     margin: 10px;
+    width: 95%;
+    background-color: transparent;
 `
 export const ContactInfo = styled.div`
     display:flex;
@@ -161,4 +187,43 @@ export const ContactInfo = styled.div`
     justify-content: space-evenly;
 `
 export const Table = styled.table`
+`
+export const Thead = styled.thead`
+    background-color: gainsboro;
+    @media (max-width: 992px){
+        display:none;
+    }
+`
+export const Tr = styled.tr`
+    @media (max-width: 992px){
+        display:block;
+    }
+`
+export const Td = styled.td`
+    @media (max-width: 992px){
+        display:block;
+        position: relative;
+        padding-left:120px;
+        text-align: left;
+        &:last-child{
+            border-bottom: 1px solid gray;
+        }
+        &::before{
+            content: attr(data-heading);
+            position: absolute;
+            padding-left:5px;
+            top:0;
+            left:0;
+            width: 100px;
+            height:40px;
+            display:flex;
+            align-items:center;
+            font-size: 1rem;
+            background-color: gainsboro;
+        }
+    }
+`
+export const EditInput = styled(Input)`
+    width: 90%;
+    font-size: 1rem;
 `

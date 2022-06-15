@@ -1,22 +1,22 @@
 import React from 'react'
-import { ContactInput, Form, Input, SmallButton } from '../styles/StyledComps'
+import { Td, SmallButton, EditInput } from '../styles/StyledComps'
 
 function EditInfo({editContactData, handleEdit, editSubmit}) {
   return (
     <>
-      <td><input type = 'text' name='fullname' placeholder='Name'
-            value={editContactData.contactName} onChange={handleEdit}/></td>
-      <td><input type = 'text' name='company' placeholder='Company'
-            value={editContactData.company} onChange={handleEdit}/></td>
-      <td><input type = 'email' name='email' placeholder='Email'
-            value={editContactData.primaryEmailAddress} onChange={handleEdit}/></td>
-      <td><input type = 'number' name='mobilephone' placeholder='Mobile Phone'
-            value={editContactData.mobilephone} onChange={handleEdit}/></td>
-      <td><input type = 'text' name='homephone' placeholder='Home Phone'
-            value={editContactData.homephone} onChange={handleEdit}/></td>
-      <td><input type = 'text' name='workphone' placeholder='Work Phone'
-            value={editContactData.workphone} onChange={handleEdit}/></td>
-      <td><SmallButton type='submit'><i className="fas fa-check-circle"></i></SmallButton></td>
+      <Td data-heading = 'Name'><EditInput type = 'text' name='fullname' placeholder='Name'
+            value={editContactData.contactName} onChange={handleEdit}/></Td>
+      <Td data-heading = 'Company'><EditInput type = 'text' name='company' placeholder='Company'
+            value={editContactData.company} onChange={handleEdit}/></Td>
+      <Td data-heading = 'Email'><EditInput type = 'email' name='email' placeholder='Email'
+            value={editContactData.primaryEmailAddress} onChange={handleEdit}/></Td>
+      <Td data-heading = 'Mobile'><EditInput type = 'number' name='mobilephone' placeholder='Mobile Phone'
+            value={editContactData.mobilephone} onChange={handleEdit}/></Td>
+      <Td data-heading = 'Home'><EditInput type = 'text' name='homephone' placeholder='Home Phone'
+            value={editContactData.homephone} onChange={handleEdit}/></Td>
+      <Td data-heading = 'Work'><EditInput type = 'text' name='workphone' placeholder='Work Phone'
+            value={editContactData.workphone} onChange={handleEdit}/></Td>
+      <Td data-heading = 'Save'><SmallButton type='submit'><i className="fas fa-check-circle"></i></SmallButton></Td>
     </>
   )
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { nanoid } from 'nanoid';
-import React, { useEffect, useState } from 'react'
-import { MainWrapper, SmallButton, Header, ContactForm, Subheader, Table} from '../styles/StyledComps';
+import React, { useEffect, useRef, useState } from 'react'
+import { ContactsWrapper, Header, ContactForm, Subheader, Table, Thead, Tr, Td} from '../styles/StyledComps';
 import AddContact from './AddContact';
 import EditInfo from './EditInfo';
 import StaticInfo from './StaticInfo';
@@ -13,7 +13,9 @@ function Contacts() {
   const [addFormData, setAddFormData] = useState(contactInfo)
   const [editContactData, setEditContactData] = useState(contactInfo)
   const [editContactId, setEditContactId] = useState(null)
-  
+  const tableRef = useRef()
+  const headers =  ['Name', 'Company', 'Email', 'Mobile', 'Home', 'Work', 'Edit', 'Delete']
+
   useEffect(() => {
     axios.get('https://interview.intrinsiccloud.net/contacts', {
       headers: {
@@ -109,37 +111,29 @@ function Contacts() {
     }
 
   return (
-    <MainWrapper style={{flexDirection: 'column'}}>
+    <ContactsWrapper>
+    {getToken ? ( 
+      <>
       <Header>Contacts list</Header>
       <ContactForm onSubmit={editSubmit}>
-      <Table>
-      <thead>
-        <td><Subheader>Name</Subheader></td>
-        <td><Subheader>Email</Subheader></td>
-        <td><Subheader>Company</Subheader></td>
-        <td><Subheader>Mobile phone</Subheader></td>
-        <td><Subheader>Home phone</Subheader></td>
-        <td><Subheader>Work phone</Subheader></td>
-        <td><Subheader>Edit</Subheader></td>
-        <td><Subheader>Delete</Subheader></td>
-      </thead>
-          <tbody>
-          {contacts.map((contact)=> (
-          <tr key={contact.id}>
+      <Table ref={tableRef}>
+      <Thead>
+        <Tr>{
+          headers.map((header,i) => (<Td key={i}><Subheader>{header}</Subheader></Td>))}
+        </Tr>
+      </Thead>
+        <tbody>
+        {contacts.map((contact)=> (<Tr key={contact.contactName}>
           {editContactId === contact.id ? 
-            (
-            <EditInfo handleEdit={handleEdit} editContactData={editContactData}/>)
-          : 
-            (<StaticInfo contact={contact} editId={editId} handleDelete={handleDelete}/>)
-          }   
-          </tr>
-          )).sort()}
+          (<EditInfo handleEdit={handleEdit} editContactData={editContactData}/>): 
+          (<StaticInfo contact={contact} editId={editId} handleDelete={handleDelete}/>)}   
+          </Tr>)).sort((a,b)=> a.key.localeCompare(b.key))}
           </tbody>
       </Table>
       </ContactForm>
       <AddContact handleAddFormSubmit={handleAddFormSubmit} handleAddFormChange={handleAddFormChange} />
-      <SmallButton type= 'submit' onClick={handleAddFormSubmit}><i className='fas fa-plus'></i></SmallButton>
-    </MainWrapper>
+    </>) : (window.location = '/') }
+    </ContactsWrapper>
   )
 }
 

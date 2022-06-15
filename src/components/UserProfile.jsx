@@ -58,6 +58,13 @@ function UserProfile() {
   }, [user, images, getToken])
 
   function changeProfilePic(e){
+    axios.post('https://interview.intrinsiccloud.net/profile/profileImage', {
+      headers: {
+      Authorization: `Bearer ${getToken}`
+     }
+    }).then(res => (
+      console.log(res.data)
+    )).catch(err => console.log(err))
     setImages([...e.target.files])
   }
 
