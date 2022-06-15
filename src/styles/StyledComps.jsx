@@ -5,6 +5,7 @@ export const MainWrapper = styled.div`
     margin: auto;
     justify-content: center;
     align-items: center;
+    text-align: center;
     height: 100vh;
     background-color: white;
 `
@@ -55,6 +56,10 @@ export const Form = styled.form`
     margin: auto;
     border-radius: 20px;
 `
+export const ContactForm = styled(Form)`
+    overflow-x: scroll;
+    margin: 20px auto;
+`
 export const Input = styled.input`
     font-size: 1.8rem;
     border: none;    
@@ -78,6 +83,7 @@ export const SmallButton = styled.button`
     border: none;
     font-size: 1.2rem;
     margin:0;
+    cursor:pointer;
 `
 export const ShowHidePassword = styled(SmallButton)`
     border-bottom: 2px solid black;
@@ -135,43 +141,24 @@ export const UserInfo = styled.div`
 export const Info = styled.p`
     padding: 0;
     margin:5px;
-`
-export const Table = styled.table`
-    width: 100%;
-    font-size: 1.2rem;
-    margin-top: 20px;
-    border-radius: 20px;
-    `
-export const Thead = styled.thead`
-    background-color: gray;
-    color:white;
-`
-export const Tdata = styled.td`
-    border-bottom: 1px solid gray;
-    padding: 5px;
-` 
-export const ContactInput = styled(Input)`
-    font-size: 1.3rem;
-    margin: 10px;
-
+    font-size:1.2rem;
 `
 export const AddContactForm = styled(Form)`
     height: fit-content;
-`
-export const Navbar = styled.div`
-    top:0;
-    height:80px;
+    display: flex;
+    font-size: 1rem;
     padding:0;
-    margin:0;
-    background-color: gray;
+    width: 90vw;
+    margin: 20px auto;
+`
+export const ContactInput = styled(Input)`
+    font-size: 1.3rem;
+    margin: 10px;
+`
+export const ContactInfo = styled.div`
     display:flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    justify-content: space-evenly;
 `
-export const Navitem = styled.p`
-    font-size:1rem;
-    color:white;
-    padding:0;
-    margin:0 20px;
-    height: 100%;
+export const Table = styled.table`
 `

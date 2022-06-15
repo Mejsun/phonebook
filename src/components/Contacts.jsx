@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react'
-import { MainWrapper, Button, Header, Wrapper} from '../styles/StyledComps';
+import { MainWrapper, SmallButton, Header, ContactForm, Subheader, Table} from '../styles/StyledComps';
 import AddContact from './AddContact';
 import EditInfo from './EditInfo';
 import StaticInfo from './StaticInfo';
@@ -109,24 +109,36 @@ function Contacts() {
     }
 
   return (
-    <MainWrapper>
-    <Wrapper>
+    <MainWrapper style={{flexDirection: 'column'}}>
       <Header>Contacts list</Header>
-      <form onSubmit={editSubmit}>
-          <div>
+      <ContactForm onSubmit={editSubmit}>
+      <Table>
+      <thead>
+        <td><Subheader>Name</Subheader></td>
+        <td><Subheader>Email</Subheader></td>
+        <td><Subheader>Company</Subheader></td>
+        <td><Subheader>Mobile phone</Subheader></td>
+        <td><Subheader>Home phone</Subheader></td>
+        <td><Subheader>Work phone</Subheader></td>
+        <td><Subheader>Edit</Subheader></td>
+        <td><Subheader>Delete</Subheader></td>
+      </thead>
+          <tbody>
           {contacts.map((contact)=> (
-          <div key={contact.id}>
+          <tr key={contact.id}>
           {editContactId === contact.id ? 
-            (<EditInfo handleEdit={handleEdit} editContactData={editContactData}/>) : 
+            (
+            <EditInfo handleEdit={handleEdit} editContactData={editContactData}/>)
+          : 
             (<StaticInfo contact={contact} editId={editId} handleDelete={handleDelete}/>)
           }   
-          </div>
+          </tr>
           )).sort()}
-          </div>
-      </form>
+          </tbody>
+      </Table>
+      </ContactForm>
       <AddContact handleAddFormSubmit={handleAddFormSubmit} handleAddFormChange={handleAddFormChange} />
-      <Button type= 'submit' onClick={handleAddFormSubmit}>Submit</Button>
-    </Wrapper>
+      <SmallButton type= 'submit' onClick={handleAddFormSubmit}><i className='fas fa-plus'></i></SmallButton>
     </MainWrapper>
   )
 }
