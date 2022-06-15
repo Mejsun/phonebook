@@ -19,6 +19,7 @@ function Login() {
       .then(res => {
         console.log(res.data)
         localStorage.setItem('email', userData.email) //save email
+        localStorage.setItem('password', userData.password) //save email
         localStorage.setItem('token', res.data.token) //save email
         window.location = '/profile'
       })

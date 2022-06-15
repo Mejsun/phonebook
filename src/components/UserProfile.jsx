@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Header, Logout, MainWrapper, Options, Profilepicture, SmallButton, Subheader, UserWrapper} from '../styles/StyledComps'
+import { Link } from "react-router-dom";
 
 function UserProfile() {
 
@@ -12,6 +13,7 @@ function UserProfile() {
   })
  
   const getToken = localStorage.getItem('token')
+  const getPassword = localStorage.getItem('password')
   const [errorMessage, setErrorMessage] = useState('')
   const [images, setImages] = useState([])
   const [imageSrc, setImageSrc] = useState([])
@@ -28,8 +30,8 @@ function UserProfile() {
         setUser({...user, displayName: res.data.displayName, joinDate: res.data.joinDate, emailAddress: res.data.emailAddress})
       })
       .catch(err => {
-        console.log(err.response.data)
-        setErrorMessage(err.response.data.message)
+        //console.log(err.message)
+        setErrorMessage(err.message)
       })
   }, [getToken, images])
 
@@ -49,8 +51,7 @@ function UserProfile() {
           setImageSrc(newImageUrl)
         })
         .catch(err => {
-          console.log(err.response.data)
-          setErrorMessage(err.message)
+          console.log(err)
         })
     }
     return profilepic
@@ -60,6 +61,26 @@ function UserProfile() {
     setImages([...e.target.files])
   }
 
+  function changePassword (){
+    axios.post('https://interview.intrinsiccloud.net/profile/changePassword', {
+      headers: {
+      Authorization: `Bearer ${getToken}`
+     }
+    }, {
+      oldPassword: getPassword
+     })
+      .then(req => {
+        console.log(req.data)
+    })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  function handleLogout (){
+    localStorage.clear()
+    window.location = '/'
+  }
   return (
     <MainWrapper>
     {getToken ? 
@@ -74,13 +95,15 @@ function UserProfile() {
       <Subheader>Joined on {user.joinDate}</Subheader>
       <Subheader>{user.emailAddress}</Subheader>
       <div>
+        <Link to='/contacts'>
         <Options>Contacts</Options>
-        <Options>Change password</Options>
-        <Logout>Logout</Logout>
+        </Link> 
+        <Options onClick={changePassword}>Change password</Options>
+        <Logout onClick={handleLogout}>Logout</Logout>
       </div>
     </UserWrapper>)
     : 
-    {errorMessage}
+    (<div>{errorMessage}</div>)
     }
     </MainWrapper>
   )

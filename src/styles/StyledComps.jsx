@@ -5,7 +5,7 @@ export const MainWrapper = styled.div`
     margin: auto;
     justify-content: center;
     align-items: center;
-    min-height: 900px;
+    height: 100vh;
     background-color: white;
 `
 export const Wrapper = styled.div`
