@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useRef, useState } from 'react'
-import { ContactsWrapper, Header, ContactForm, Subheader, Table, Thead, Tr, Td} from '../styles/StyledComps';
+import { ContactsWrapper, Options, Header, ContactForm, Subheader, Table, Thead, Tr, Td} from '../styles/StyledComps';
 import AddContact from './AddContact';
 import EditInfo from './EditInfo';
 import StaticInfo from './StaticInfo';
+import { Link } from "react-router-dom";
 
 function Contacts() {
   const getToken = localStorage.getItem('token')
@@ -115,6 +116,12 @@ function Contacts() {
     {getToken ? ( 
       <>
       <Header>Contacts list</Header>
+      <div style={{width: '250px'}}>
+
+      <Link to='/profile'>
+        <Options>Profile</Options>
+        </Link> 
+      </div>
       <ContactForm onSubmit={editSubmit}>
       <Table ref={tableRef}>
       <Thead>
