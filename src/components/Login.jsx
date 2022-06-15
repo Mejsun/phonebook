@@ -23,7 +23,8 @@ function Login() {
         window.location = '/profile'
       })
       .catch(err => {
-        console.log(err)
+        console.log(err.response.data.message)
+        setValidationMessage(err.response.data.message)
       })
     
   }

@@ -18,17 +18,31 @@ export const Wrapper = styled.div`
     text-align: center;
     justify-content: center;
     align-items: center;
-    width: 50%;
-    min-width:800px;
+    width: 80%;
+    max-width:800px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `
-export const Header = styled.h1`
-    font-size:3rem;
-    margin: 0;
+export const UserWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    width: 100%;
 `
-export const Subheader = styled.h3`
+export const Header = styled.h1`
+    font-size:2.5rem;
+    margin: 5px;
+`
+export const Subheader = styled.p`
     width: 100%;
     height: fit-content;
+    margin: 5px;
+    font-size: 1.3rem;
+`
+export const Profilepicture = styled.img`
+    width:150px;
+    border-radius: 50%;
+    margin-bottom: 15px;
 `
 export const Form = styled.form`
     display: flex;
@@ -95,13 +109,22 @@ export const Button = styled.button`
         height: 100%;
         background: gray ;
         z-index: -1;
-        transform-origin: 0% 0%;
         transition: .3s ease-in-out;
     }
     &:hover::after{
         width: 100%;
     }
-
+`
+export const Options = styled(Button)`
+    width: 60%;
+    font-size: 1.2rem;
+`
+export const Logout = styled(Options)`
+    background-color: white;
+    border: 1px red solid;
+    &::after{
+        background:red;
+    }
 `
 export const UserInfo = styled.div`
     display: flex;

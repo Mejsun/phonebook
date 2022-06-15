@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Button, Header, Info, MainWrapper, Subheader, UserInfo, Wrapper } from '../styles/StyledComps'
+import { Header, Logout, MainWrapper, Options, Profilepicture, SmallButton, Subheader, UserWrapper} from '../styles/StyledComps'
 
 function UserProfile() {
 
@@ -8,12 +8,14 @@ function UserProfile() {
     "displayName": "",
     "emailAddress": "",
     "joinDate": "",
+    "userId": 0,
   })
  
   const getToken = localStorage.getItem('token')
   const [errorMessage, setErrorMessage] = useState('')
+  const [images, setImages] = useState([])
+  const [imageSrc, setImageSrc] = useState([])
 
-  console.log(getToken)
   
   useEffect(() => {
     axios.get('https://interview.intrinsiccloud.net/profile', {
@@ -26,25 +28,57 @@ function UserProfile() {
         setUser({...user, displayName: res.data.displayName, joinDate: res.data.joinDate, emailAddress: res.data.emailAddress})
       })
       .catch(err => {
-        console.log(err.response)
-        setErrorMessage(err.message)
+        console.log(err.response.data)
+        setErrorMessage(err.response.data.message)
       })
-  }, [getToken])
-    
-  console.log(user)
+  }, [getToken, images])
+
+  useEffect(() =>{
+    const profilepic = async () =>{
+      await axios.get(`https://interview.intrinsiccloud.net/profile/profileImage/${user.userId}`, {
+        responseType: 'blob'
+      }, {
+        headers: {
+        Authorization: `Bearer ${getToken}`
+       }
+      })
+        .then(res => {
+          console.log(res.data)
+          const newImageUrl = [URL.createObjectURL(res.data)]
+          images.forEach(image => newImageUrl.push(URL.createObjectURL(image)))
+          setImageSrc(newImageUrl)
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          setErrorMessage(err.message)
+        })
+    }
+    return profilepic
+  }, [user, images, getToken])
+
+  function changeProfilePic(e){
+    setImages([...e.target.files])
+  }
 
   return (
     <MainWrapper>
     {getToken ? 
     (
-    <Wrapper>
-      <img src='#' alt='profilepic'></img>
+    <UserWrapper>
+      <Profilepicture src= {imageSrc[imageSrc.length-1]} alt='profile' />
+      <SmallButton type='button'>
+      <input type='file' accept='image/*' onChange={changeProfilePic} id="actual-btn" hidden/>
+      <label htmlFor="actual-btn"><i className="fas fa-edit"></i></label>
+      </SmallButton>
       <Header>{user.displayName}</Header>
       <Subheader>Joined on {user.joinDate}</Subheader>
       <Subheader>{user.emailAddress}</Subheader>
-      <Button>Change the password</Button>
-      <Button>Logout</Button>
-    </Wrapper>)
+      <div>
+        <Options>Contacts</Options>
+        <Options>Change password</Options>
+        <Logout>Logout</Logout>
+      </div>
+    </UserWrapper>)
     : 
     {errorMessage}
     }
