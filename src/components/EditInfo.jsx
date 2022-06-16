@@ -4,11 +4,11 @@ import { Td, SmallButton, EditInput } from '../styles/StyledComps'
 function EditInfo({editContactData, handleEdit, editSubmit}) {
   return (
     <>
-      <Td data-heading = 'Name'><EditInput type = 'text' name='fullname' placeholder='Name'
+      <Td data-heading = 'Name'><EditInput type = 'text' name='contactName' placeholder='Name'
             value={editContactData.contactName} onChange={handleEdit}/></Td>
       <Td data-heading = 'Company'><EditInput type = 'text' name='company' placeholder='Company'
             value={editContactData.company} onChange={handleEdit}/></Td>
-      <Td data-heading = 'Email'><EditInput type = 'email' name='email' placeholder='Email'
+      <Td data-heading = 'Email'><EditInput type = 'email' name='primaryEmailAddress' placeholder='Email'
             value={editContactData.primaryEmailAddress} onChange={handleEdit}/></Td>
       <Td data-heading = 'Mobile'><EditInput type = 'number' name='mobilephone' placeholder='Mobile Phone'
             value={editContactData.mobilephone} onChange={handleEdit}/></Td>
