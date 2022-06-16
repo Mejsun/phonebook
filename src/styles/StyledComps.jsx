@@ -11,23 +11,15 @@ export const MainWrapper = styled.div`
     height: 100vh;
     background-color: white;
     background:
-    url(${bottompic}) bottom right no-repeat,
-    url(${toppic}) top left no-repeat;
-  background-size: 45%, 20%;
+        url(${bottompic}) bottom right no-repeat,
+        url(${toppic}) top left no-repeat;
+    background-size: 45%, 20%;
 `
-export const Wrapper = styled.div`
-    background-color: rgba(255, 255, 255, .15); 
-    backdrop-filter: blur(5px);
-    border-radius: 20px;
-    display: flex;
+export const ContactsWrapper = styled(MainWrapper)`
     flex-direction: column;
-    padding: 30px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    max-width:800px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    min-height: calc(100vh - 100px);
+    height: fit-content;
+    padding: 50px 0;
 `
 export const UserWrapper = styled.div`
     display: flex;
@@ -36,21 +28,38 @@ export const UserWrapper = styled.div`
     align-items: center;
     width: 100%;
 `
-export const ContactsWrapper = styled(MainWrapper)`
-    flex-direction: column;
-    min-height: 100vh;
-    height: fit-content;
-    padding: 50px 0;
+export const Wrapper = styled(UserWrapper)`
+    width: 70%;
+    max-width:800px;
+    background-color: rgba(255, 255, 255, .15); 
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    padding: 30px;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`
+export const PasswordInput = styled.div`
+    display: flex;
+    width: 100%;
+    margin-top: 15px;
 `
 export const Header = styled.h1`
     font-size:2.5rem;
     margin: 5px;
+    @media (max-width: 768px){
+        font-size: 2rem;
+    }
 `
 export const Subheader = styled.p`
     width: 100%;
     height: fit-content;
     margin: 5px;
     font-size: 1.3rem;
+`
+export const Info = styled.p`
+    padding: 0;
+    margin:5px;
+    font-size:1.2rem;
 `
 export const Profilepicture = styled.img`
     width:150px;
@@ -63,13 +72,29 @@ export const Form = styled.form`
     font-size: 1.8rem;
     background-color: white;
     padding: 20px;
-    width: fit-content;
-    width:80%;
+    width: 80%;
     margin: auto;
     border-radius: 20px;
 `
 export const ContactForm = styled(Form)`
     margin: 20px auto;
+`
+export const AddContactForm = styled.form`
+    border-radius: 20px;
+    height: fit-content;
+    font-size: 1rem;
+    padding: 0;
+    background-color: transparent;
+    width: 100%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(3,1fr);
+    column-gap: 20px;
+    @media (max-width: 768px){
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6,1fr);
+    }
 `
 export const Input = styled.input`
     font-size: 1.8rem;
@@ -79,15 +104,20 @@ export const Input = styled.input`
     border-bottom: 2px solid black;
     margin: 25px 0;
 `
-export const PasswordInput = styled.div`
-    display: flex;
-    width: 100%;
-    margin-top: 15px;
-`
 export const Pass = styled(Input)`
     display: inline;
     width: 90%;
     margin: 0;
+`
+export const ContactInput = styled(Input)`
+    font-size: 1.3rem;
+    margin: 10px;
+    width: 95%;
+    background-color: white;
+`
+export const EditInput = styled(Input)`
+    width: 90%;
+    font-size: 1rem;
 `
 export const SmallButton = styled.button`
     background-color: inherit;
@@ -143,51 +173,6 @@ export const Logout = styled(Options)`
         background:red;
     }
 `
-export const UserInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    font-size: 1.5rem;
-    margin: auto;  
-`
-export const Info = styled.p`
-    padding: 0;
-    margin:5px;
-    font-size:1.2rem;
-`
-export const AddContactForm = styled(Form)`
-    height: fit-content;
-    display: grid;
-    font-size: 1rem;
-    padding:0;
-    background-color: transparent;
-    width: 100%;
-    margin: 20px  auto;
-    grid-template-rows: repeat(2,1fr);
-    grid-template-columns: repeat(3,1fr);
-    column-gap: 20px;
-    @media (max-width: 992px){
-        grid-template-columns: repeat(2,1fr);
-        grid-template-rows: repeat(3,1fr);
-    }
-    @media (max-width: 768px){
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(6,1fr);
-    }
-    
-`
-export const ContactInput = styled(Input)`
-    font-size: 1.3rem;
-    margin: 10px;
-    width: 95%;
-    background-color: transparent;
-`
-export const ContactInfo = styled.div`
-    display:flex;
-    width: 100%;
-    justify-content: space-evenly;
-`
-export const Table = styled.table`
-`
 export const Thead = styled.thead`
     background-color: gainsboro;
     @media (max-width: 992px){
@@ -222,8 +207,4 @@ export const Td = styled.td`
             background-color: gainsboro;
         }
     }
-`
-export const EditInput = styled(Input)`
-    width: 90%;
-    font-size: 1rem;
 `
