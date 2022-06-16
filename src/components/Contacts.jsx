@@ -16,6 +16,7 @@ function Contacts() {
   const [editContactId, setEditContactId] = useState(null)
   const tableRef = useRef()
   const headers =  ['Name', 'Company', 'Email', 'Mobile', 'Home', 'Work', 'Edit', 'Delete']
+  const emailRegex = /^[a-zA-Z0-9!#$%&'*+=?^_`{|}~\W]+@[a-zA-Z0-9!#$%&'*+=?^_`{|}~\W]+\.[a-z.]{2,}/gm
 
   useEffect(() => {
     axios.get('https://interview.intrinsiccloud.net/contacts', {
@@ -54,9 +55,13 @@ function Contacts() {
       homephone: addFormData.homephone, 
       workphone: addFormData.workphone, 
      }
-    const newContacts = [...contacts, newContact]
-    setContacts(newContacts)
-    setAddFormData({contactName: '', company: '', primaryEmailAddress: '', mobilephone: '', homephone:'', workphone:''})
+     if((addFormData.contactName && addFormData.company) !=='' && (addFormData.mobilephone.length || addFormData.homephone.length || addFormData.workphone.length) > 10 && emailRegex.test(addFormData.primaryEmailAddress) === true){
+      const newContacts = [...contacts, newContact]
+      setContacts(newContacts)
+      setAddFormData({contactName: '', company: '', primaryEmailAddress: '', mobilephone: '', homephone:'', workphone:''})
+    } else{
+      window.alert('Please complete name, company and email fields, and add at least one contact number')
+    }
   }
 
   function handleDelete(id){
