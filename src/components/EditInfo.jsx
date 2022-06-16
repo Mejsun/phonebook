@@ -1,7 +1,7 @@
 import React from 'react'
 import { Td, SmallButton, EditInput } from '../styles/StyledComps'
 
-function EditInfo({editContactData, handleEdit, editSubmit}) {
+function EditInfo({editContactData, handleEdit}) {
   return (
     <>
       <Td data-heading = 'Name'><EditInput type = 'text' name='contactName' placeholder='Name'

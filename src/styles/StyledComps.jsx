@@ -103,6 +103,9 @@ export const Input = styled.input`
     background-color: inherit;
     border-bottom: 2px solid black;
     margin: 25px 0;
+    @media (max-width: 768px){
+        font-size: 1.3rem;
+    }
 `
 export const Pass = styled(Input)`
     display: inline;
@@ -130,6 +133,9 @@ export const ShowHidePassword = styled(SmallButton)`
     border-bottom: 2px solid black;
     max-width: 11%;
     font-size: 1.8rem;
+    @media (max-width: 768px){
+        font-size: 1.3rem;
+    }
 `
 export const Button = styled.button`
     background-color: #92B4EC;

@@ -5,93 +5,80 @@ import { Link } from "react-router-dom";
 
 function UserProfile() {
 
-  const [user, setUser] = useState({
-    "displayName": "",
-    "emailAddress": "",
-    "joinDate": "",
-    "userId": 0,
-  })
- 
-  const getToken = localStorage.getItem('token')
-  const getPassword = localStorage.getItem('password')
-  const [errorMessage, setErrorMessage] = useState('')
-  const [images, setImages] = useState([])
-  const [imageSrc, setImageSrc] = useState([])
+  const getToken = localStorage.getItem('token') //local storage checking for token key/value
+  const [user, setUser] = useState({ "displayName": "", "emailAddress": "", "joinDate": "", "userId": 0}) //set user data state from the users input
+  const [errorMessage, setErrorMessage] = useState('') //show if there is error message to the user
+  const [images, setImages] = useState([]) //profile images array
+  const [imageSrc, setImageSrc] = useState([]) //source of profile image
 
-  
-  useEffect(() => {
+  useEffect(() => { //populate the user profile with the data from api as soon as the page renders
     axios.get('https://interview.intrinsiccloud.net/profile', {
       headers: {
-      Authorization: `Bearer ${getToken}`
+      Authorization: `Bearer ${getToken}` //check if the user is logged in 
      }
     })
       .then(res => {
         console.log(res.data)
+        //populate default user object with data from the api
         setUser({...user, displayName: res.data.displayName, joinDate: res.data.joinDate, emailAddress: res.data.emailAddress})
       })
       .catch(err => {
         //console.log(err.message)
-        setErrorMessage(err.message)
+        setErrorMessage(err.message) //show error message if there is
       })
-  }, [getToken, images])
+  }, [getToken]) //component dependant on getToken variable
 
-  useEffect(() =>{
+  useEffect(() =>{ //fetch the profile picture from the api
     const profilepic = async () =>{
       await axios.get(`https://interview.intrinsiccloud.net/profile/profileImage/${user.userId}`, {
-        responseType: 'blob'
-      }, {
-        headers: {
-        Authorization: `Bearer ${getToken}`
-       }
+        responseType: 'blob' //the picture in the api is in binary form
       })
         .then(res => {
           console.log(res.data)
-          const newImageUrl = [URL.createObjectURL(res.data)]
-          images.forEach(image => newImageUrl.push(URL.createObjectURL(image)))
-          setImageSrc(newImageUrl)
+          const newImageUrl = [URL.createObjectURL(res.data)] //get the default profilepicture and change it to a url string
+          images.forEach(image => newImageUrl.push(URL.createObjectURL(image))) //add the image from api to the images array
+          setImageSrc(newImageUrl) //set the image from api as profile picture
         })
         .catch(err => {
           console.log(err)
         })
     }
     return profilepic
-  }, [user, images, getToken])
+  }, [user, images, getToken]) //array of dependencies
 
   function changeProfilePic(e){
-    axios.post('https://interview.intrinsiccloud.net/profile/profileImage', {
-      headers: {
-      Authorization: `Bearer ${getToken}`
-     }
-    }).then(res => (
+    //axios does not work in this function
+    axios.post('https://interview.intrinsiccloud.net/profile/profileImage')
+    .then(res => (
       console.log(res.data)
     )).catch(err => console.log(err))
-    setImages([...e.target.files])
+    setImages([...e.target.files]) //add the uploaded image to the images array
   }
 
-  function changePassword (){
-    axios.post('https://interview.intrinsiccloud.net/profile/changePassword', {
+  /**
+   commented out as it returns a 403 error
+   function changePassword (){
+     axios.post('https://interview.intrinsiccloud.net/profile/changePassword', {
       headers: {
-      Authorization: `Bearer ${getToken}`
-     }
-    }, {
-      oldPassword: getPassword
-     })
+        Authorization: `Bearer ${getToken}`
+     }})
       .then(req => {
         console.log(req.data)
-    })
+      })
       .catch(err => {
         console.log(err)
       })
-  }
+    }    
+  */
 
   function handleLogout (){
-    localStorage.clear()
-    window.location = '/'
+    localStorage.clear() //empty localStorage
+    window.location = '/' //redirect the user back to login page
   }
+
   return (
     <MainWrapper>
-    {getToken ? 
-    (
+    {getToken ? (
     <UserWrapper>
       <Profilepicture src= {imageSrc[imageSrc.length-1]} alt='profile' />
       <SmallButton type='button'>
@@ -105,13 +92,11 @@ function UserProfile() {
         <Link to='/contacts'>
         <Options>Contacts</Options>
         </Link> 
-        <Options onClick={changePassword} disabled>Change password</Options>
+        <Options disabled>Change password</Options>
         <Logout onClick={handleLogout}>Logout</Logout>
       </div>
-    </UserWrapper>)
-    : 
-    (<div>{errorMessage}</div>)
-    }
+    </UserWrapper>) : 
+    (<div>{errorMessage}</div>)}
     </MainWrapper>
   )
 }
