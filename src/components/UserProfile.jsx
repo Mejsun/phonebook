@@ -105,7 +105,7 @@ function UserProfile() {
         <Link to='/contacts'>
         <Options>Contacts</Options>
         </Link> 
-        <Options onClick={changePassword}>Change password</Options>
+        <Options onClick={changePassword} disabled>Change password</Options>
         <Logout onClick={handleLogout}>Logout</Logout>
       </div>
     </UserWrapper>)
