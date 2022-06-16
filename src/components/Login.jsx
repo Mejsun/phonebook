@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import {Wrapper, Header, Subheader, Form, Input, PasswordInput, ShowHidePassword, Pass, Button, Options} from '../styles/StyledComps'
+import {Wrapper, Header, Subheader, Form, Input, PasswordInput, ShowHidePassword, Pass, Button, Options, Logout} from '../styles/StyledComps'
 import { Link } from "react-router-dom";
 
 function Login() {
@@ -49,7 +49,10 @@ function Login() {
     setValidationMessage(validateInfo)
   }, [userData.email]) 
 
-
+  function handleLogout (){
+    localStorage.clear()
+    window.location.reload()
+  }
 
   return (
     <>
@@ -64,6 +67,7 @@ function Login() {
         <Link to='/contacts'>
         <Options>Contacts</Options>
         </Link> 
+        <Logout onClick={handleLogout}>Logout</Logout>
       </div>
     </>
       ) : (
