@@ -9,7 +9,7 @@ function App() {
         <Login/>
       </MainWrapper>
     </div>
-  );
+  ); 
 }
 
 export default App;
